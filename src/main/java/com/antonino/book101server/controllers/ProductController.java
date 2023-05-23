@@ -22,7 +22,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/add", consumes = {"application/json"})
     public ResponseEntity<?> addProduct(@RequestBody @Valid Product product) {
         Optional<Product> optionalProduct = productService.addProduct(product);
@@ -33,7 +32,6 @@ public class ProductController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/edit", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product) {
         Optional<Product> optionalProduct = productService.updateProduct(product);
