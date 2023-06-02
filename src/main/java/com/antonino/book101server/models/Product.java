@@ -48,4 +48,7 @@ public class Product {
     @NotNull(message = "Price is required")
     @Column(name = "PREZZO")
     private double price;
+
+    @Column(name = "PDF")
+    private byte[] pdf;
 }
