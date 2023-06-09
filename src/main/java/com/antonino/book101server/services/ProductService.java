@@ -21,6 +21,9 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private GoogleCloudStorageService googleCloudStorageService;
+
     // TESTING
     @Transactional(readOnly = true)
     public List<Product> getProducts() {
@@ -36,6 +39,8 @@ public class ProductService {
         if (productOptional.isEmpty()) {
             return Optional.of(productRepository.save(product));
         }
+        googleCloudStorageService.uploadFile(product.getPdfFile(),product.getId()+"_pdf.pdf");
+        googleCloudStorageService.uploadFile(product.getPictureFile(),product.getId()+"jpg.jpg");
         return Optional.empty();
     }
 

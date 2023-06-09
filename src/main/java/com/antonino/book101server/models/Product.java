@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -50,5 +51,9 @@ public class Product {
     private double price;
 
     @Column(name = "PDF")
-    private byte[] pdf;
+    private String pdf;
+
+    private byte[] pictureFile;
+    private byte[] pdfFile;
+
 }

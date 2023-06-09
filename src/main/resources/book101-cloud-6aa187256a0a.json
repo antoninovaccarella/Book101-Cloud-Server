@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "book101-cloud",
+  "private_key_id": "6aa187256a0ab472a2e4038fe11e1abae4c769b9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1fHYmhVndex+m\n8I28Xxfu59qivYVSFrHqvwYjERg15Kms4RsHshS38r21LT+SxJ7A5RfyyPZVIWBU\nva5Cm+BfVNrh2UDL2iCiC6jtNW8CazgErAJNQqxIrjmWSSygNQZdXltUnO3GbeMZ\n36izMufj9GpPMCN8qRRRgAqcnr8UdvbB2bqSCa7fV4l9Vjwl15VN87+qiTbRibyb\nMx+o/3Xo0GqpxdMRYc2+xI7LirFMgHly4hsJ68J/3Z/CDFtHfq8a858nN9qi/oeO\nxxeP3/kO6yc2VccGI7S+VC5xzh3ESUIg7CzZ5uYhGIhlz49dLdxLICbZunVsIiTA\nU7a2r51JAgMBAAECggEAFIGjU4OwlWYou8sVRs47ZPEhew89UdrS4GaUddCkCs3j\nLq+yR06zyNumnCLIWsf49KyGJdaXf+PBL94NY0Ub54Wt5ERRLh9/3bOB00i8+fnd\ntuhtK6fvkdhO1TiAMHuBVDo5yWAgfVH0Ddu/4vyq507aFsfGkLrFmxZjzJHi3xfH\n1ACHK6s5CDXZN4j9UEy4rq+C2M9M9/M3TD7k1YLiok7hLvwITLWCYejniTSYEWh4\n86Y/fMKaYVlYrSaYDmbJOWxJBmcChu51R/jDM+gV9/A+dR1QL86SCujavOzSMVDu\nJ1A/xAP7jzCoAErykWLu4YAieyXnnFG1Rw1nuzzDMQKBgQDhiVC8q2YtdrawEodV\nC1cFASSNv22+F0Pi2bAhXRMNdICTNfYJxdOEWZC3zQWC2mz/QbtPCa8CHGPCFCEo\nn7H+BgD7K4YxeQcN4q4FvfOrhIxXNmTrPQ/zlKpuUE91RKzdIFihG9tcCJzFi3iz\nBkrQ1be51haUwsK16hxRh3naeQKBgQDN//X9zapC7ctVthz9eClZ5uoQXF1DTHUF\nt9eyhEQb1s65jsuUmeL0qT/Nmr/JWRWc0aXFKPQ/aDnaaZxaMzuYJ0qiII3B3d91\nZ7ui6nQ0VnE1KsKdO/58X0XT3GupcKr2ecwhhyEw5/Fv9n6av1DvhOmNW7Z8JN6n\naC9FHX4lUQKBgF7APqAU7gdZoWSVVC/BZNygX0gBzUwYIBgU1m8d2BxF/qJaADSY\n3MT0j9z4EEGqHDKc3eFVsyWS4cIujMOxW6jZwt3CqkzsiK8ntW6KH+3F8OPO4VUG\nwUXXBkb0DH26zVjU9wcwWdbvc1V2w82KbjIQJ3C2ZaQ3sm+UnDMQVHwZAoGAResu\nrypzM6xKa5kYVd/HCUCbCVqQPRtiTMKNb4X9KAXMvKZ+6r0gjzIy+bIgjlKyRzvR\nLA4ueKcDm+JksyjYfVg4uLab5sVL5ymCQlWZg3ojiows6flG8yfTJ4mU8TnQjT/h\nzS90UIkpJXtglV2CNwnBy7zpP1G0UNXH1YmhG0ECgYEAitkSVDJFJS/RJciL6hUm\nujfPIKpP2oQ8yzuQCx++seBI5ZUS5lUh9GdFP8kv0KTJ4lwUHnnQcVYenJc6eNbo\nWrDg9OaEpAcksXwDf/5aqYhbw0cxrwKvLhuUhdj2hoVelXkSv8oSUoB6Xinniwhe\nPCxp7XzUyTz9bd4t5Oa8Oiw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "account-di-servizio-book101@book101-cloud.iam.gserviceaccount.com",
+  "client_id": "101830366626001021543",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/account-di-servizio-book101%40book101-cloud.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
