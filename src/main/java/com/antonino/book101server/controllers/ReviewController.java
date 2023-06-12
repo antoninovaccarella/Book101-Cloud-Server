@@ -21,6 +21,8 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
     private ProductRepository productRepository;
 
     @PostMapping(value = "/add/{id}", consumes = {"application/json"})
