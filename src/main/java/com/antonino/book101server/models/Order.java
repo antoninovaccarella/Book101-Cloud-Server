@@ -18,7 +18,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @Entity
 @Table(name = "ORDINE")
-public class    Order {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

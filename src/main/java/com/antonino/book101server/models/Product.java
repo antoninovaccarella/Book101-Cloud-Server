@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.web.multipart.MultipartFile;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,8 +36,9 @@ public class Product {
     @Column(name = "CATEGORIA")
     private com.antonino.book101server.models.ProductCategory category;
 
+    @Unique
     @NotNull(message = "ISBN is required")
-    @Column(name = "ISBN")
+    @Column(name = "ISBN", unique = true)
     private String isbn;
 
     @Column(name = "DESCRIZIONE")
