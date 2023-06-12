@@ -53,7 +53,7 @@ public class Product {
     @Column(name = "PDF")
     private String pdf;
 
-    private byte[] pictureFile;
-    private byte[] pdfFile;
+    //private byte[] pictureFile;
+    //private byte[] pdfFile;
 
 }
