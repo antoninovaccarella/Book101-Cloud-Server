@@ -39,8 +39,8 @@ public class ProductService {
         if (productOptional.isEmpty()) {
             return Optional.of(productRepository.save(product));
         }
-        googleCloudStorageService.uploadFile(product.getPdfFile(),product.getId()+"_pdf.pdf");
-        googleCloudStorageService.uploadFile(product.getPictureFile(),product.getId()+"jpg.jpg");
+        googleCloudStorageService.uploadFile(product.getPdf(),product.getId()+"_pdf.pdf");
+        googleCloudStorageService.uploadFile(product.getPicture(),product.getId()+"jpg.jpg");
         return Optional.empty();
     }
 

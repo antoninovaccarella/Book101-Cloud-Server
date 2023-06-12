@@ -6,19 +6,18 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.util.Base64;
 
 @Service
 public class GoogleCloudStorageService {
-    public void uploadFile(byte[] fileData, String fileName) {
+    public void uploadFile(String stringData, String fileName) {
 
         try{
+            byte[] fileData = Base64.getDecoder().decode(stringData.getBytes("UTF-8"));
 
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
 
@@ -35,7 +34,7 @@ public class GoogleCloudStorageService {
         }
         throw new GCPFileUploadException("An error occurred while storing data to GCS");
     }
-    public ByteArrayResource downloadFile(String fileName) throws IOException {
+    public String downloadFile(String fileName) throws IOException {
         InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
         StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
                 .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
@@ -43,10 +42,10 @@ public class GoogleCloudStorageService {
         Storage storage = options.getService();
 
         Blob blob = storage.get("book101-storage", fileName);
-        ByteArrayResource resource = new ByteArrayResource(
-                blob.getContent());
 
-        return resource;
+
+        return Base64.getEncoder().encodeToString(blob.getContent());
+
     }
 
 
