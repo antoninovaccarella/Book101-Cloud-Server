@@ -24,13 +24,17 @@ public class ProductController {
 
     @PostMapping(value = "/add", consumes = {"application/json"})
     public ResponseEntity<?> addProduct(@RequestBody @Valid Product product) {
+        if (product.getId() != null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("L'ID del Prodotto è auto-generato."));
+        }
         Optional<Product> optionalProduct = productService.addProduct(product);
         if (optionalProduct.isPresent()) {
             return ResponseEntity.ok(optionalProduct.get());
         } else {
-            return ResponseEntity.badRequest().body(new MessageResponse("Prodotto esistente"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Prodotto NON aggiunto."));
         }
     }
+
 
     @PostMapping(value = "/edit", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product) {

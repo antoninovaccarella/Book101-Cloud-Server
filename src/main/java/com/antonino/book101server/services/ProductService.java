@@ -36,12 +36,14 @@ public class ProductService {
     @Transactional(readOnly = false)
     public Optional<Product> addProduct(Product product) {
         Optional<Product> productOptional = getProduct(product.getId());
-        if (productOptional.isEmpty()) {
-            return Optional.of(productRepository.save(product));
+        if (productOptional.isPresent()) {
+            return Optional.empty();  // return empty if a product with the same ID already exists
+        } else {
+            product = productRepository.save(product);
+            googleCloudStorageService.uploadFile(product.getPdf(),product.getId()+"_pdf.pdf");
+            googleCloudStorageService.uploadFile(product.getPicture(),product.getId()+"jpg.jpg");
+            return Optional.of(product);
         }
-        googleCloudStorageService.uploadFile(product.getPdf(),product.getId()+"_pdf.pdf");
-        googleCloudStorageService.uploadFile(product.getPicture(),product.getId()+"jpg.jpg");
-        return Optional.empty();
     }
 
     @Transactional(readOnly = false)
