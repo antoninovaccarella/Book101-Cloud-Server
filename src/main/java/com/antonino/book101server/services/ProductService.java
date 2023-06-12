@@ -51,9 +51,13 @@ public class ProductService {
                 value
                         .setName(product.getName())
                         .setStock(product.getStock())
-                        .setShortDetails(product.getShortDetails())
+                        .setIsbn(product.getIsbn())
                         .setDescription(product.getDescription())
+                        .setAuthor(product.getAuthor())
+                        .setLanguage(product.getLanguage())
+                        .setPublisher(product.getPublisher())
                         .setPicture(product.getPicture())
+                        .setPdf(product.getPdf())
                         .setPrice(product.getPrice())));
     }
 

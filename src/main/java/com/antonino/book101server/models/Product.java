@@ -36,12 +36,21 @@ public class Product {
     @Column(name = "CATEGORIA")
     private com.antonino.book101server.models.ProductCategory category;
 
-    @NotNull(message = "Description is required")
-    @Column(name = "DETTAGLI")
-    private String shortDetails;
+    @NotNull(message = "ISBN is required")
+    @Column(name = "ISBN")
+    private String isbn;
 
     @Column(name = "DESCRIZIONE")
     private String description;
+
+    @Column(name = "AUTORE")
+    private String author;
+
+    @Column(name = "LINGUA")
+    private String language;
+
+    @Column(name = "EDITORE")
+    private String publisher;
 
     @Column(name = "ANTEPRIMA")
     private String picture;
@@ -52,8 +61,5 @@ public class Product {
 
     @Column(name = "PDF")
     private String pdf;
-
-    //private byte[] pictureFile;
-    //private byte[] pdfFile;
 
 }
