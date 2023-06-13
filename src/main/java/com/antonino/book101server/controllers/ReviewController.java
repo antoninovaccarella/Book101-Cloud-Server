@@ -44,6 +44,7 @@ public class ReviewController {
         }
     }
 
+    /*
     @GetMapping(value = "/{product}/paged", produces = "application/json")
     public ResponseEntity<List<Review>> getReviewsByProduct(
             @PathVariable("product") Long productID,
@@ -53,5 +54,7 @@ public class ReviewController {
         List<Review> result = reviewService.showAllReviewsByProduct(productRepository.findProductById(productID), pageNumber, pageSize, sortBy);
         return ResponseEntity.ok(result);
     }
+
+     */
 }
 

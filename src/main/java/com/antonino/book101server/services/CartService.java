@@ -26,6 +26,9 @@ public class CartService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private GoogleCloudStorageService googleCloudStorageService;
+
     @Transactional(readOnly = false)
     public ShoppingCart createCart(User user) {
         return cartRepository.save(new ShoppingCart(user.getId(), user, new HashSet<>(), 0));
@@ -53,13 +56,17 @@ public class CartService {
     @Transactional(readOnly = false)
     public ShoppingCart updateCart(CartItem cartItem, User user) throws ProductNotFoundException {
         Optional<Product> productFromDb = productService.getProduct(cartItem.getProduct().getId());
-        System.out.println(productFromDb.get());
         ShoppingCart cartFromDb = this.getCartByUser(user);
         // Il prodotto esiste?
         if (productFromDb.isEmpty()) {
             throw new ProductNotFoundException("Prodotto non esiste");
         } else {
             Product p = productFromDb.get();
+            //{TEST PERCHè NON CARICE PDF E IMG IN CARRELLO
+            p.setPicture(googleCloudStorageService.downloadAnteprima(p.getId() + "_jpg.jpg"));
+            p.setPdf(googleCloudStorageService.downloadPDF(p.getId() + "_pdf.pdf"));
+            cartItem.setProduct(p);
+            //}TEST FINITO
             cartItem.setShoppingCart(cartFromDb);
             cartItem.setSubtotal(p.getPrice() * cartItem.getQuantity());
             Set<CartItem> cartItems = cartFromDb.getCartItems();
