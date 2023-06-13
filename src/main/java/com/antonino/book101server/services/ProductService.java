@@ -70,11 +70,11 @@ public class ProductService {
         Page<Product> pagedResult = productRepository.findAll(paging);
         if (pagedResult.hasContent()) {
             pagedResult.getContent().stream().forEach(
-                    product ->product.setPicture(googleCloudStorageService.downloadFile(product.getId() + "_jpg.jpg"))
+                    product ->product.setPicture(googleCloudStorageService.downloadAnteprima(product.getId() + "_jpg.jpg"))
             );
 /*
             pagedResult.getContent().stream().forEach(
-                    product ->product.setPdf(googleCloudStorageService.downloadFile(product.getId() + "_pdf.pdf"))
+                    product ->product.setPdf(googleCloudStorageService.downloadPDF(product.getId() + "_pdf.pdf"))
 
             ); */
             return pagedResult.getContent();

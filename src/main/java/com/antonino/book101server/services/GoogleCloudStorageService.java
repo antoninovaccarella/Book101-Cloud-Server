@@ -35,7 +35,7 @@ public class GoogleCloudStorageService {
         }
     }
 
-    public String downloadFile(String fileName) {
+    public String downloadAnteprima(String fileName) {
         try {
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
             StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
@@ -43,10 +43,21 @@ public class GoogleCloudStorageService {
             Storage storage = options.getService();
             Blob blob = storage.get("book101-storage", fileName);
             System.out.println(fileName);
-            return "data:image/jpg;base64," + Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));        } catch (Exception e) {
+            return "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));        } catch (Exception e) {
             throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
         }
 
     }
+    public String downloadPDF(String fileName) {
+        try {
+            InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
+            StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
+                    .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
+            Storage storage = options.getService();
+            Blob blob = storage.get("book101-storage", fileName);
+            System.out.println(fileName);
+            return "data:application/octet-stream;base64," + Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));        } catch (Exception e) {
+            throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
+        }
 
 }
