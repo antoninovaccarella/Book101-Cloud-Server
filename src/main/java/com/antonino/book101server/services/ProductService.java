@@ -36,8 +36,8 @@ public class ProductService {
     @Transactional(readOnly = false)
     public Optional<Product> addProduct(Product product) {
         product = productRepository.save(product);
-        googleCloudStorageService.uploadFile(product.getPdf(), product.getId() + "_pdf.pdf");
-        googleCloudStorageService.uploadFile(product.getPicture(), product.getId() + "_jpg.jpg");
+        //googleCloudStorageService.uploadFile(product.getPdf(), product.getId() + "_pdf.pdf");
+        //googleCloudStorageService.uploadFile(product.getPicture(), product.getId() + "_jpg.jpg");
         return Optional.of(product);
     }
 
