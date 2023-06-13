@@ -53,6 +53,7 @@ public class CartService {
     @Transactional(readOnly = false)
     public ShoppingCart updateCart(CartItem cartItem, User user) throws ProductNotFoundException {
         Optional<Product> productFromDb = productService.getProduct(cartItem.getProduct().getId());
+        System.out.println(productFromDb.get());
         ShoppingCart cartFromDb = this.getCartByUser(user);
         // Il prodotto esiste?
         if (productFromDb.isEmpty()) {

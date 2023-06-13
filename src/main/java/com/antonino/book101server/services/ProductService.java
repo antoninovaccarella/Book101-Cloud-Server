@@ -25,16 +25,6 @@ public class ProductService {
     private GoogleCloudStorageService googleCloudStorageService;
 
     @Transactional(readOnly = true)
-    public List<Product> getProducts() {
-        List<Product> products = productRepository.findAll();
-        for (Product p : products) {
-            p.setPicture(googleCloudStorageService.downloadAnteprima(p.getId() + "_jpg.jpg"));
-            p.setPdf(googleCloudStorageService.downloadPDF(p.getId() + "_pdf.pdf"));
-        }
-        return products;
-    }
-
-    @Transactional(readOnly = true)
     public Optional<Product> getProduct(Long id) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
@@ -73,7 +63,12 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<Product> showAllProducts() {
-        return productRepository.findAll();
+        List<Product> products = productRepository.findAll();
+        for (Product p : products) {
+            p.setPicture(googleCloudStorageService.downloadAnteprima(p.getId() + "_jpg.jpg"));
+            p.setPdf(googleCloudStorageService.downloadPDF(p.getId() + "_pdf.pdf"));
+        }
+        return products;
     }
 
     @Transactional(readOnly = true)
