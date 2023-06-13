@@ -60,7 +60,7 @@ public class Product {
     @Column(name = "PREZZO")
     private double price;
 
-    @Column(name = "PDF")
+    @Transient
     private String pdf;
 
 }
