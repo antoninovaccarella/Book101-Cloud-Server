@@ -26,16 +26,11 @@ public class GoogleCloudStorageService {
             byte[] fileData = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
             LOGGER.info("fileData created");
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
-            LOGGER.info("input stream initialized");
             StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
                     .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
-            LOGGER.info("storage options created");
             Storage storage = options.getService();
-            LOGGER.info("storage instanciated");
             Bucket bucket = storage.get("book101-storage", Storage.BucketGetOption.fields());
-            LOGGER.info("bucket instanciated");
             Blob blob = bucket.create(fileName, fileData, "application/octet-stream");
-            LOGGER.info("blob created");
         } catch (Exception e) {
             throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
         }
@@ -44,14 +39,11 @@ public class GoogleCloudStorageService {
     public String downloadFile(String fileName) {
         try {
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
-            LOGGER.info("input stream initialized");
             StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
                     .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
-            LOGGER.info("storage options created");
             Storage storage = options.getService();
-            LOGGER.info("storage instanciated");
             Blob blob = storage.get("book101-storage", fileName);
-            LOGGER.info("blob created");
+            System.out.println(fileName);
             return Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));
         } catch (Exception e) {
             throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
