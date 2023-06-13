@@ -2,7 +2,10 @@ package com.antonino.book101server.services;
 
 import com.antonino.book101server.exceptions.GCPFileUploadException;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.*;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,11 +50,9 @@ public class GoogleCloudStorageService {
             LOGGER.info("storage options created");
             Storage storage = options.getService();
             LOGGER.info("storage instanciated");
-            Bucket bucket = storage.get("book101-storage", Storage.BucketGetOption.fields());
-            Blob blob = bucket.get(fileName);
+            Blob blob = storage.get("book101-storage", fileName);
             LOGGER.info("blob created");
-            return Base64.getEncoder().encodeToString(blob.getContent());
-
+            return Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));
         } catch (Exception e) {
             throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
         }
