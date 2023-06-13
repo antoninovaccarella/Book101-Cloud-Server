@@ -25,13 +25,35 @@ public class ProductService {
     private GoogleCloudStorageService googleCloudStorageService;
 
     // TESTING
+    /*
     @Transactional(readOnly = true)
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
+     */
+
     @Transactional(readOnly = true)
-    public Optional<Product> getProduct(Long id) {return productRepository.findById(id);}
+    public List<Product> getProducts() {
+        List<Product> products = productRepository.findAll();
+        for(Product p : products) {
+            p.setPicture(googleCloudStorageService.downloadAnteprima(p.getId() + "_jpg.jpg"));
+            p.setPdf(googleCloudStorageService.downloadPDF(p.getId() + "_pdf.pdf"));
+        }
+        return products;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Product> getProduct(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()) {
+            product.get().setPicture(googleCloudStorageService.downloadAnteprima(product.get().getId() + "_jpg.jpg"));
+            product.get().setPdf(googleCloudStorageService.downloadPDF(product.get().getId() + "_pdf.pdf"));
+            }
+            return product;
+    }
+
+
 
     @Transactional(readOnly = false)
     public Optional<Product> addProduct(Product product) {
@@ -91,6 +113,10 @@ public class ProductService {
             pagedResult.getContent().stream().forEach(
                     product ->product.setPicture(googleCloudStorageService.downloadAnteprima(product.getId() + "_jpg.jpg"))
             );
+            pagedResult.getContent().stream().forEach(
+                    product ->product.setPdf(googleCloudStorageService.downloadPDF(product.getId() + "_pdf.pdf"))
+
+            );
             return pagedResult.getContent();
         } else {
             return new ArrayList<>();
@@ -101,6 +127,4 @@ public class ProductService {
     public List<Product> showProductsByName(String name) {
         return productRepository.findByNameContainingIgnoreCase(name);
     }
-
-
 }
