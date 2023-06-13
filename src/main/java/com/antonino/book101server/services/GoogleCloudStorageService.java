@@ -6,8 +6,9 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,7 @@ import java.util.Base64;
 @Service
 public class GoogleCloudStorageService {
 
-    Logger LOGGER = LoggerFactory.getLogger(GoogleCloudStorageService.class);
-
+    Logger LOGGER = LogManager.getLogger(GoogleCloudStorageService.class);
     public void uploadFile(String stringData, String fileName) {
 
         try {
@@ -36,7 +36,7 @@ public class GoogleCloudStorageService {
             Blob blob = bucket.create(fileName, fileData, "application/octet-stream");
             LOGGER.info("blob created");
         } catch (Exception e) {
-            throw new GCPFileUploadException("An error occurred while storing data to GCS");
+            throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
         }
     }
 
@@ -54,7 +54,7 @@ public class GoogleCloudStorageService {
             return Base64.getEncoder().encodeToString(blob.getContent());
 
         } catch (Exception e) {
-            throw new GCPFileUploadException("An error occurred while storing data to GCS");
+            throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
         }
 
     }
