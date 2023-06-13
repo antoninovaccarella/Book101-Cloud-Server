@@ -1,2 +1,12 @@
 runtime: java17
+env: standard
 instance_class: F1
+handlers:
+  - url: .*
+    script: auto
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
+service_account: book101-cloud@appspot.gserviceaccount.com
