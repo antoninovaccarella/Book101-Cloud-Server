@@ -53,6 +53,7 @@ public class Product {
     @Column(name = "EDITORE")
     private String publisher;
 
+    @Transient
     private String picture;
 
     @NotNull(message = "Price is required")

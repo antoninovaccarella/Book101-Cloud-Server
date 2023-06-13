@@ -72,6 +72,9 @@ public class ProductService {
             pagedResult.getContent().stream().forEach(
                     product ->product.setPicture(googleCloudStorageService.downloadFile(product.getId() + "_jpg.jpg"))
             );
+            pagedResult.getContent().stream().forEach(
+                    product ->product.setPdf(googleCloudStorageService.downloadFile(product.getId() + "_pdf.pdf"))
+            );
             return pagedResult.getContent();
         } else {
             return new ArrayList<>();
