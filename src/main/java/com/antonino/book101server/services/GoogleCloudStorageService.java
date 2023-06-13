@@ -24,7 +24,6 @@ public class GoogleCloudStorageService {
         try {
             String base64Image = stringData.split(",")[1];
             byte[] fileData = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
-            LOGGER.info("fileData created");
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
             StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
                     .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
