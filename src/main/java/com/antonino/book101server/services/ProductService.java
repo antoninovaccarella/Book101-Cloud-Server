@@ -37,7 +37,7 @@ public class ProductService {
     public Optional<Product> addProduct(Product product) {
         product = productRepository.save(product);
         //googleCloudStorageService.uploadFile(product.getPdf(), product.getId() + "_pdf.pdf");
-        //googleCloudStorageService.uploadFile(product.getPicture(), product.getId() + "_jpg.jpg");
+        googleCloudStorageService.uploadFile(product.getPicture(), product.getId() + "_jpg.jpg");
         return Optional.of(product);
     }
 
@@ -69,6 +69,9 @@ public class ProductService {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
         Page<Product> pagedResult = productRepository.findAll(paging);
         if (pagedResult.hasContent()) {
+            pagedResult.getContent().stream().forEach(
+                    product ->product.setPicture(googleCloudStorageService.downloadFile(product.getId() + "_jpg.jpg"))
+            );
             return pagedResult.getContent();
         } else {
             return new ArrayList<>();

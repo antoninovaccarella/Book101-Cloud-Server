@@ -6,6 +6,8 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -14,51 +16,47 @@ import java.util.Base64;
 
 @Service
 public class GoogleCloudStorageService {
+
+    Logger LOGGER = LoggerFactory.getLogger(GoogleCloudStorageService.class);
+
     public void uploadFile(String stringData, String fileName) {
 
-        try{
+        try {
             byte[] fileData = Base64.getDecoder().decode(stringData.getBytes("UTF-8"));
-
+            LOGGER.info("fileData created");
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
-
+            LOGGER.info("input stream initialized");
             StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
                     .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
-
+            LOGGER.info("storage options created");
             Storage storage = options.getService();
-            Bucket bucket = storage.get("book101-storage",Storage.BucketGetOption.fields());
-
+            LOGGER.info("storage instanciated");
+            Bucket bucket = storage.get("book101-storage", Storage.BucketGetOption.fields());
+            LOGGER.info("bucket instanciated");
             Blob blob = bucket.create(fileName, fileData, "application/octet-stream");
-
-        }catch (Exception e){
+            LOGGER.info("blob created");
+        } catch (Exception e) {
             throw new GCPFileUploadException("An error occurred while storing data to GCS");
         }
-        throw new GCPFileUploadException("An error occurred while storing data to GCS");
-    }
-    public String downloadFile(String fileName) throws IOException {
-        InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
-        StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
-                .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
-
-        Storage storage = options.getService();
-
-        Blob blob = storage.get("book101-storage", fileName);
-
-
-        return Base64.getEncoder().encodeToString(blob.getContent());
-
     }
 
+    public String downloadFile(String fileName) {
+        try {
+            InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
+            LOGGER.info("input stream initialized");
+            StorageOptions options = StorageOptions.newBuilder().setProjectId("Book101-Cloud")
+                    .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
+            LOGGER.info("storage options created");
+            Storage storage = options.getService();
+            LOGGER.info("storage instanciated");
+            Blob blob = storage.get("book101-storage", fileName);
+            LOGGER.info("blob created");
+            return Base64.getEncoder().encodeToString(blob.getContent());
 
-    private String checkFileExtension(String fileName) {
-        if(fileName != null && fileName.contains(".")){
-            String[] extensionList = {".png", ".jpeg", ".pdf"};
-
-            for(String extension: extensionList) {
-                if (fileName.endsWith(extension)) {
-                    return extension;
-                }
-            }
+        } catch (Exception e) {
+            throw new GCPFileUploadException("An error occurred while storing data to GCS");
         }
-        throw new RuntimeException("Not a permitted file type");
+
     }
+
 }

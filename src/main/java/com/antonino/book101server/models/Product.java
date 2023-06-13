@@ -53,7 +53,6 @@ public class Product {
     @Column(name = "EDITORE")
     private String publisher;
 
-    @Column(name = "ANTEPRIMA")
     private String picture;
 
     @NotNull(message = "Price is required")

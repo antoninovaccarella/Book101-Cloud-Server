@@ -2,6 +2,7 @@ package com.antonino.book101server.controllers;
 
 import com.antonino.book101server.repositories.ProductRepository;
 import com.antonino.book101server.models.Review;
+import com.antonino.book101server.models.Product;
 import com.antonino.book101server.payload.response.MessageResponse;
 import com.antonino.book101server.services.ReviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +26,21 @@ public class ReviewController {
     @Autowired
     private ProductRepository productRepository;
 
-    @PostMapping(value = "/add/{id}", consumes = {"application/json"})
-    public ResponseEntity<?> addReview(@RequestBody @Valid Review review) {
-        Optional<Review> optionalReview = reviewService.addReview(review);
-        if (optionalReview.isPresent()) {
-            return ResponseEntity.ok(optionalReview.get());
+
+    @PostMapping(value = "/add/{id}", consumes = "application/json")
+    public ResponseEntity<?> addReview(@RequestBody @Valid Review review, @PathVariable("id") Long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()) {
+            review.setProduct(optionalProduct.get());
+
+            Optional<Review> optionalReview = reviewService.addReview(review);
+            if (optionalReview.isPresent()) {
+                return ResponseEntity.ok(optionalReview.get());
+            } else {
+                return ResponseEntity.badRequest().body(new MessageResponse("Recensione esistente"));
+            }
         } else {
-            return ResponseEntity.badRequest().body(new MessageResponse("Recensione esistente"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Prodotto non trovato"));
         }
     }
 
