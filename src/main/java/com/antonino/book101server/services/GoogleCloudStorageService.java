@@ -2,10 +2,7 @@ package com.antonino.book101server.services;
 
 import com.antonino.book101server.exceptions.GCPFileUploadException;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,7 +47,7 @@ public class GoogleCloudStorageService {
             LOGGER.info("storage options created");
             Storage storage = options.getService();
             LOGGER.info("storage instanciated");
-            Blob blob = storage.get("book101-storage", fileName);
+            Blob blob = storage.get(BlobId.of("book101-storage", fileName));
             LOGGER.info("blob created");
             return Base64.getEncoder().encodeToString(blob.getContent());
 
