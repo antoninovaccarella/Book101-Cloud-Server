@@ -43,8 +43,7 @@ public class GoogleCloudStorageService {
             Storage storage = options.getService();
             Blob blob = storage.get("book101-storage", fileName);
             System.out.println(fileName);
-            return Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));
-        } catch (Exception e) {
+            return "data:image/jpg;base64," + Base64.getEncoder().encodeToString(blob.getContent(Blob.BlobSourceOption.generationMatch()));        } catch (Exception e) {
             throw new GCPFileUploadException("An error occurred while storing data to GCS", e);
         }
 
