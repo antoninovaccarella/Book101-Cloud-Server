@@ -47,7 +47,8 @@ public class GoogleCloudStorageService {
             LOGGER.info("storage options created");
             Storage storage = options.getService();
             LOGGER.info("storage instanciated");
-            Blob blob = storage.get(BlobId.of("book101-storage", fileName));
+            Bucket bucket = storage.get("book101-storage", Storage.BucketGetOption.fields());
+            Blob blob = bucket.get(fileName);
             LOGGER.info("blob created");
             return Base64.getEncoder().encodeToString(blob.getContent());
 
