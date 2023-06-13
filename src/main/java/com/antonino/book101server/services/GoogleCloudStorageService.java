@@ -22,7 +22,8 @@ public class GoogleCloudStorageService {
     public void uploadFile(String stringData, String fileName) {
 
         try {
-            byte[] fileData = Base64.getDecoder().decode(stringData.getBytes("UTF-8"));
+            String base64Image = stringData.split(",")[1];
+            byte[] fileData = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
             LOGGER.info("fileData created");
             InputStream inputStream = new ClassPathResource("book101-cloud-6aa187256a0a.json").getInputStream();
             LOGGER.info("input stream initialized");
