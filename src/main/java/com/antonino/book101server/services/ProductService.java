@@ -88,6 +88,9 @@ public class ProductService {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
         Page<Product> pagedResult = productRepository.findProductByCategory(category, paging);
         if (pagedResult.hasContent()) {
+            pagedResult.getContent().stream().forEach(
+                    product ->product.setPicture(googleCloudStorageService.downloadAnteprima(product.getId() + "_jpg.jpg"))
+            );
             return pagedResult.getContent();
         } else {
             return new ArrayList<>();
