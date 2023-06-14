@@ -62,11 +62,13 @@ public class CartService {
             throw new ProductNotFoundException("Prodotto non esiste");
         } else {
             Product p = productFromDb.get();
-            //{TEST PERCHè NON CARICE PDF E IMG IN CARRELLO
+            /*
+            //{TEST PERCHè NON CARICA PDF E IMG IN CARRELLO
             p.setPicture(googleCloudStorageService.downloadAnteprima(p.getId() + "_jpg.jpg"));
             p.setPdf(googleCloudStorageService.downloadPDF(p.getId() + "_pdf.pdf"));
             cartItem.setProduct(p);
             //}TEST FINITO
+            */
             cartItem.setShoppingCart(cartFromDb);
             cartItem.setSubtotal(p.getPrice() * cartItem.getQuantity());
             Set<CartItem> cartItems = cartFromDb.getCartItems();
