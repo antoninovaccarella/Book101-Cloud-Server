@@ -2,6 +2,7 @@ package com.antonino.book101server.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.checkerframework.common.aliasing.qual.Unique;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity
 @Table(name = "PRODOTTO")
+@EqualsAndHashCode(exclude = {"picture", "pdf"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
