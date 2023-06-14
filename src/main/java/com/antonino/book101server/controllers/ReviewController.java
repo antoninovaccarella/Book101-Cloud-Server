@@ -44,7 +44,7 @@ public class ReviewController {
         }
     }
 
-    /*
+
     @GetMapping(value = "/{product}/paged", produces = "application/json")
     public ResponseEntity<List<Review>> getReviewsByProduct(
             @PathVariable("product") Long productID,
@@ -55,6 +55,6 @@ public class ReviewController {
         return ResponseEntity.ok(result);
     }
 
-     */
+
 }
 
