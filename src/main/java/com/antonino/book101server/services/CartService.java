@@ -50,6 +50,13 @@ public class CartService {
     // Evito di restituire un optional perché ogni utente ha necessariamente un carrello
     @Transactional(readOnly = true)
     public ShoppingCart getCartByUser(User user) {
+        ShoppingCart shoppingCart = cartRepository.findShoppingCartByUser(user);
+        shoppingCart.getCartItems().stream().forEach(cartItemDb ->
+                {Product productDb = cartItemDb.getProduct();
+                    productDb.setPicture(googleCloudStorageService.downloadAnteprima(productDb.getId() + "_jpg.jpg"));
+                    productDb.setPdf(googleCloudStorageService.downloadPDF(productDb.getId() + "_pdf.pdf"));
+                }
+        );
         return cartRepository.findShoppingCartByUser(user);
     }
 

@@ -31,6 +31,9 @@ public class OrderService {
     @Autowired
     private com.antonino.book101server.services.UserService userService;
 
+    @Autowired
+    private GoogleCloudStorageService googleCloudStorageService;
+
     @Transactional(readOnly = false)
     public Order purchaseOrder(Order order, String username) throws ProductNotFoundException, BadOrderException, OutOfStockException {
         Optional<User> userFromDb = userService.getUserbyUsername(username);
@@ -67,14 +70,32 @@ public class OrderService {
         Order orderFinal = orderRepository.save(orderFromDb);
         ShoppingCart cartFromDb = this.cartService.getCartByUser(userFromDb.get());
         cartService.clearCart(cartFromDb);
+
+
+        orderFinal.getOrderItems().stream().forEach(orderItem -> {Product productDb = orderItem.getProduct();
+                    productDb.setPicture(googleCloudStorageService.downloadAnteprima(productDb.getId() + "_jpg.jpg"));
+                    productDb.setPdf(googleCloudStorageService.downloadPDF(productDb.getId() + "_pdf.pdf"));
+                }
+        );
+
         return orderFinal;
     }
 
     @Transactional(readOnly = true)
     public List<Order> getUserOrders(String username) {
         Optional<User> userFromDb = userService.getUserbyUsername(username);
-        if (userFromDb.isEmpty()) {return null;}
-            return orderRepository.findOrderByUser(userFromDb.get());
+        if (userFromDb.isEmpty()) {
+            return null;
+        }
+        else {
+            List<Order> orders = orderRepository.findOrderByUser(userFromDb.get());
+            orders.stream().forEach(order -> {order.getOrderItems().stream().forEach(orderItem -> {Product productDb = orderItem.getProduct();
+                        productDb.setPicture(googleCloudStorageService.downloadAnteprima(productDb.getId() + "_jpg.jpg"));
+                        productDb.setPdf(googleCloudStorageService.downloadPDF(productDb.getId() + "_pdf.pdf"));
+                    }
+            );});
+            return orders;
+        }
     }
 
 
