@@ -22,6 +22,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Add Spring Cloud GCP Dependency BOM -->
             <dependency>
                 <groupId>com.google.cloud</groupId>
                 <artifactId>spring-cloud-gcp-dependencies</artifactId>
@@ -99,7 +100,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-- Add CloudSQL Starter for MySQL -->
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>

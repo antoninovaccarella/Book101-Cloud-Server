@@ -62,13 +62,6 @@ public class CartService {
             throw new ProductNotFoundException("Prodotto non esiste");
         } else {
             Product p = productFromDb.get();
-            /*
-            //{TEST PERCHè NON CARICA PDF E IMG IN CARRELLO
-            p.setPicture(googleCloudStorageService.downloadAnteprima(p.getId() + "_jpg.jpg"));
-            p.setPdf(googleCloudStorageService.downloadPDF(p.getId() + "_pdf.pdf"));
-            cartItem.setProduct(p);
-            //}TEST FINITO
-            */
             cartItem.setShoppingCart(cartFromDb);
             cartItem.setSubtotal(p.getPrice() * cartItem.getQuantity());
             Set<CartItem> cartItems = cartFromDb.getCartItems();
@@ -96,6 +89,12 @@ public class CartService {
             cartItems.add(cartItem);
             cartItemsRepository.save(cartItem);
             cartFromDb.setTotalAmount(newAmount);
+            cartFromDb.getCartItems().stream().forEach(cartItemDb ->
+                    {Product productDb = cartItemDb.getProduct();
+                        productDb.setPicture(googleCloudStorageService.downloadAnteprima(productDb.getId() + "_jpg.jpg"));
+                        productDb.setPdf(googleCloudStorageService.downloadPDF(productDb.getId() + "_pdf.pdf"));
+                    }
+            );
             return cartRepository.save(cartFromDb);
         }
     }

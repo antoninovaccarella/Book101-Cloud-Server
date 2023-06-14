@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
-    //Product findProductById(Long id);
+    Product findProductById(Long id);
     Page<Product> findProductByCategory(@NotNull(message = "Category is required") ProductCategory category, Pageable pageable);
     List<Product> findByNameContaining(String name);
     List<Product> findByNameContainingIgnoreCase(String name);
